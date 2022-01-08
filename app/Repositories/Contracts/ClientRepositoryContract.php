@@ -20,4 +20,11 @@ interface ClientRepositoryContract
      * @return mixed
      */
     public function find(int $id);
+
+    /**
+     * @param int $id
+     * @param array $fields
+     * @return mixed
+     */
+    public function update(int $id, array $fields);
 }

@@ -39,4 +39,14 @@ class ClientRepository implements ClientRepositoryContract
     {
         return $this->model->with('address')->find($id);
     }
+
+    /**
+     * @param int $id
+     * @param array $fields
+     * @return mixed
+     */
+    public function update(int $id, array $fields)
+    {
+        return $this->model->find($id)->update($fields);
+    }
 }

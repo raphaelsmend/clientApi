@@ -28,7 +28,7 @@ class ClientController extends Controller
         return $this->clientService->getAll();
     }
 
-    public function show(ShowClientRequest $request, $id)
+    public function show(ShowClientRequest $request, int $id)
     {
         return $this->clientService->findById($id);
     }
@@ -38,8 +38,13 @@ class ClientController extends Controller
         return $this->clientService->store($request->validated());
     }
 
-    public function update(UpdateClientRequest $request)
+    public function update(UpdateClientRequest $request, int $id)
     {
-        return $this->clientService->update($request->validated());
+        return $this->clientService->update($id, $request->validated());
+    }
+
+    public function destroy(ShowClientRequest $request, int $id)
+    {
+        return $this->clientService->destroy($id);
     }
 }

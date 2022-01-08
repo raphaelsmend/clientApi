@@ -45,7 +45,7 @@ class ClientService implements ClientServiceContract
 
         if (! $addressId ) {
             return new JsonResponse(
-                $this->getApiReturn(false, 'CEP não econtrado', null),
+                $this->getApiReturn(false, 'zipCode not found', null),
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -64,7 +64,49 @@ class ClientService implements ClientServiceContract
     public function findById(int $id)
     {
         return new JsonResponse(
-            $this->getApiReturn(true, null, (new ClientResource($this->repository->create($this->repository->find($id)->toArray())))),
+            $this->getApiReturn(true, null, (new ClientResource($this->repository->find($id)))),
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * @param int $id
+     * @param array $fields
+     * @return mixed
+     */
+    public function update(int $id, array $fields)
+    {
+        if ( $fields["zipCode"] ) {
+            $addressId = $this->addressService->getAddressId($fields["zipCode"]);
+
+            if (! $addressId ) {
+                return new JsonResponse(
+                    $this->getApiReturn(false, 'zipCode not found.', null),
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
+            $fields["address_id"] = $addressId;
+        }
+
+        $this->repository->update($id, $fields);
+
+        return new JsonResponse(
+            $this->getApiReturn(true, null, (new ClientResource($this->repository->find($id)))),
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy(int $id)
+    {
+        $this->repository->find($id)->delete();
+
+        return new JsonResponse(
+            $this->getApiReturn(true, "deleted", null),
             Response::HTTP_OK
         );
     }

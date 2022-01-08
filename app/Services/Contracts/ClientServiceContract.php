@@ -21,5 +21,16 @@ interface ClientServiceContract
      */
     public function findById(int $id);
 
+    /**
+     * @param int $id
+     * @param array $fields
+     * @return mixed
+     */
     public function update(int $id, array $fields);
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy(int $id);
 }
