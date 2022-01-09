@@ -7,8 +7,12 @@ use App\Http\Resources\ApiReturnErrorResource;
 
 trait GeneralFuncions
 {
-    private $defaultDaysExpiration = 7;
-
+    /**
+     * @param bool $status
+     * @param string|null $message
+     * @param $data
+     * @return array
+     */
     private function getApiReturn(bool $status, ?string $message, $data)
     {
         $dataResource = [];

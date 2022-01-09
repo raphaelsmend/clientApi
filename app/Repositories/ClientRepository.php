@@ -9,6 +9,10 @@ class ClientRepository implements ClientRepositoryContract
 {
     private $model;
 
+    /**
+     * ClientRepository constructor.
+     * @param Client $model
+     */
     public function __construct(Client $model)
     {
         $this->model = $model;

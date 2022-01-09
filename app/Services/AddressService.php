@@ -2,17 +2,10 @@
 
 namespace  App\Services;
 
-use App\Repositories\AddressRepository;
 use App\Repositories\Contracts\AddressRepositoryContract;
 use App\Services\Contracts\AddressServiceContract;
 use App\Traits\GeneralFuncions;
-use http\Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\UrlGenerator;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redirect;
-use Symfony\Component\HttpFoundation\Response;
-use App\Models\Address;
 use Claudsonm\CepPromise\CepPromise;
 use Claudsonm\CepPromise\Exceptions\CepPromiseException;
 

@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
-    //public $table = 'url';
-
     public $fillable = [
         "city",
         "district",

@@ -9,6 +9,10 @@ class AddressRepository implements AddressRepositoryContract
 {
     private $model;
 
+    /**
+     * AddressRepository constructor.
+     * @param Address $model
+     */
     public function __construct(Address $model)
     {
         $this->model = $model;

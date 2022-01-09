@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    //public $table = 'url';
-
     public $fillable = [
         'name',
         'email',

@@ -1,23 +1,13 @@
 <?php
 
 namespace  App\Services;
-
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\UserResource;
-use App\Repositories\AddressRepository;
-use App\Repositories\Contracts\ClientRepositoryContract;
+ource;
+use App\Http\Resources\UserResource;;
 use App\Repositories\Contracts\UserRepositoryContract;
-use App\Services\Contracts\AddressServiceContract;
-use App\Services\Contracts\ClientServiceContract;
 use App\Services\Contracts\UserServiceContract;
 use App\Traits\GeneralFuncions;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Routing\UrlGenerator;
-use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
-use App\Transformers\UrlTransformer;
-use App\Models\Client;
 
 class UserService implements UserServiceContract
 {
@@ -25,6 +15,10 @@ class UserService implements UserServiceContract
 
     use GeneralFuncions;
 
+    /**
+     * UserService constructor.
+     * @param UserRepositoryContract $repository
+     */
     function __construct(
         UserRepositoryContract $repository
     ) {

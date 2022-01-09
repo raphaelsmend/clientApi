@@ -3,18 +3,12 @@
 namespace  App\Services;
 
 use App\Http\Resources\ClientResource;
-use App\Repositories\AddressRepository;
 use App\Repositories\Contracts\ClientRepositoryContract;
 use App\Services\Contracts\AddressServiceContract;
 use App\Services\Contracts\ClientServiceContract;
 use App\Traits\GeneralFuncions;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Routing\UrlGenerator;
-use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
-use App\Transformers\UrlTransformer;
-use App\Models\Client;
 
 class ClientService implements ClientServiceContract
 {
