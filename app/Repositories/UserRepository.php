@@ -49,7 +49,7 @@ class UserRepository implements UserRepositoryContract
      */
     public function update(int $id, array $fields)
     {
-        if ($fields["password"]) {
+        if (array_key_exists("password", $fields)) {
             $fields["password"] = Hash::make($fields["password"]);
         }
         return $this->model->find($id)->update($fields);

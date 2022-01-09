@@ -58,7 +58,7 @@ class UserService implements UserServiceContract
     public function findById(int $id)
     {
         return new JsonResponse(
-            $this->getApiReturn(true, null, (new ClientResource($this->repository->find($id)))),
+            $this->getApiReturn(true, null, (new UserResource($this->repository->find($id)))),
             Response::HTTP_OK
         );
     }
@@ -70,23 +70,10 @@ class UserService implements UserServiceContract
      */
     public function update(int $id, array $fields)
     {
-        if ( $fields["zipCode"] ) {
-            $addressId = $this->addressService->getAddressId($fields["zipCode"]);
-
-            if (! $addressId ) {
-                return new JsonResponse(
-                    $this->getApiReturn(false, 'zipCode not found.', null),
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
-
-            $fields["address_id"] = $addressId;
-        }
-
         $this->repository->update($id, $fields);
 
         return new JsonResponse(
-            $this->getApiReturn(true, null, (new ClientResource($this->repository->find($id)))),
+            $this->getApiReturn(true, null, (new UserResource($this->repository->find($id)))),
             Response::HTTP_OK
         );
     }

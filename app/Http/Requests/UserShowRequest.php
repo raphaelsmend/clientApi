@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreClientRequest extends FormRequest
+class UserShowRequest extends FormRequest
 {
     use GeneralFuncions;
 
@@ -30,36 +30,19 @@ class StoreClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'User' => [
                 'required',
-                'string'
-            ],
-            'email' => [
-                'required',
-                'unique:clients,email',
-                'email'
-            ],
-            'phone1' => [
-                'required',
-                'string'
-            ],
-            'phone2' => [
-                'nullable',
-                'string'
-            ],
-            'zipCode' => [
-                'required',
-                'integer'
-            ],
-            'address_number' => [
-                'nullable',
-                'string'
-            ],
-            'address_complement' => [
-                'nullable',
-                'string'
+                'integer',
+                'exists:users,id'
             ]
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'User' => $this->route()->parameter('User')
+        ]);
     }
 
     protected function failedValidation(Validator $validator)

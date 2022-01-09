@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\GeneralFuncions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
@@ -9,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ShowClientRequest extends FormRequest
 {
+    use GeneralFuncions;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -44,6 +47,8 @@ class ShowClientRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json($validator->errors(), Response::HTTP_BAD_REQUEST));
+        throw new HttpResponseException(response()->json(
+            $this->getApiReturn(false, null, $validator->errors())
+            , Response::HTTP_BAD_REQUEST));
     }
 }

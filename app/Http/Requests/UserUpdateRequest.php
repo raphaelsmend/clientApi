@@ -2,16 +2,14 @@
 
 namespace App\Http\Requests;
 
-use App\Traits\GeneralFuncions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreClientRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
-    use GeneralFuncions;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,42 +28,36 @@ class StoreClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'User' => [
                 'required',
+                'integer',
+                'exists:users,id'
+            ],
+            'name' => [
+                'nullable',
                 'string'
             ],
             'email' => [
-                'required',
-                'unique:clients,email',
-                'email'
-            ],
-            'phone1' => [
-                'required',
-                'string'
-            ],
-            'phone2' => [
                 'nullable',
-                'string'
+                'email',
+                Rule::unique('users')->ignore($this->User, 'id')
             ],
-            'zipCode' => [
-                'required',
-                'integer'
-            ],
-            'address_number' => [
-                'nullable',
-                'string'
-            ],
-            'address_complement' => [
+            'password' => [
                 'nullable',
                 'string'
             ]
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'User' => $this->route()->parameter('User')
+        ]);
+    }
+
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(
-            $this->getApiReturn(false, null, $validator->errors())
-            , Response::HTTP_BAD_REQUEST));
+        throw new HttpResponseException(response()->json($validator->errors(), Response::HTTP_BAD_REQUEST));
     }
 }

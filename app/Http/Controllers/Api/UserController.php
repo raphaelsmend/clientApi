@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ShowClientRequest;
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UserShowRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Services\Contracts\ClientServiceContract;
 use App\Services\Contracts\UserServiceContract;
 use Illuminate\Container\Container;
@@ -30,7 +32,7 @@ class UserController extends Controller
         return $this->userService->getAll();
     }
 
-    public function show(ShowClientRequest $request, int $id)
+    public function show(UserShowRequest $request, int $id)
     {
         return $this->userService->findById($id);
     }
@@ -40,12 +42,12 @@ class UserController extends Controller
         return $this->userService->store($request->validated());
     }
 
-    public function update(UpdateClientRequest $request, int $id)
+    public function update(UserUpdateRequest $request, int $id)
     {
         return $this->userService->update($id, $request->validated());
     }
 
-    public function destroy(ShowClientRequest $request, int $id)
+    public function destroy(UserShowRequest $request, int $id)
     {
         return $this->userService->destroy($id);
     }
