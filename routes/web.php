@@ -17,5 +17,3 @@ use Api\ShortenedUrlRedirectController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/{urlShortened}', ShortenedUrlRedirectController::class);

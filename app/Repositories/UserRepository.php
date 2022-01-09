@@ -3,8 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Repositories\Contracts\UserRepositoryContract;
+use Illuminate\Support\Facades\Hash;
 
-class UserRepository
+class UserRepository implements UserRepositoryContract
 {
     private $model;
 
@@ -13,8 +15,43 @@ class UserRepository
         $this->model = $model;
     }
 
-    public function getUserByMail(Array $fields)
+    /**
+     * @return mixed
+     */
+    public function getAll()
     {
-        return $this->model->where("email", $fields["email"])->first();
+        return $this->model->all();
+    }
+
+    /**
+     * @param array $fields
+     * @return mixed
+     */
+    public function create(array $fields)
+    {
+        $fields["password"] = Hash::make($fields["password"]);
+        return $this->model->create($fields);
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function find(int $id)
+    {
+        return $this->model->find($id);
+    }
+
+    /**
+     * @param int $id
+     * @param array $fields
+     * @return mixed
+     */
+    public function update(int $id, array $fields)
+    {
+        if ($fields["password"]) {
+            $fields["password"] = Hash::make($fields["password"]);
+        }
+        return $this->model->find($id)->update($fields);
     }
 }

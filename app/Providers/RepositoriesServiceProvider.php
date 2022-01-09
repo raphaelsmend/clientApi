@@ -6,6 +6,8 @@ use App\Repositories\AddressRepository;
 use App\Repositories\ClientRepository;
 use App\Repositories\Contracts\AddressRepositoryContract;
 use App\Repositories\Contracts\ClientRepositoryContract;
+use App\Repositories\Contracts\UserRepositoryContract;
+use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoriesServiceProvider extends ServiceProvider
@@ -25,6 +27,10 @@ class RepositoriesServiceProvider extends ServiceProvider
             ClientRepositoryContract::class,
             ClientRepository::class
         );
+        $this->app->bind(
+            UserRepositoryContract::class,
+            UserRepository::class
+        );
     }
 
     /**
@@ -36,7 +42,8 @@ class RepositoriesServiceProvider extends ServiceProvider
     {
         return [
             AddressRepository::class,
-            ClientRepository::class
+            ClientRepository::class,
+            UserRepository::class
         ];
     }
 }

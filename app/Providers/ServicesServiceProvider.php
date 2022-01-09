@@ -6,6 +6,8 @@ use App\Services\ClientService;
 use App\Services\Contracts\AddressServiceContract;
 use App\Services\AddressService;
 use App\Services\Contracts\ClientServiceContract;
+use App\Services\Contracts\UserServiceContract;
+use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class ServicesServiceProvider extends ServiceProvider
@@ -25,6 +27,10 @@ class ServicesServiceProvider extends ServiceProvider
             ClientServiceContract::class,
             ClientService::class
         );
+        $this->app->bind(
+            UserServiceContract::class,
+            UserService::class
+        );
     }
 
     /**
@@ -36,7 +42,8 @@ class ServicesServiceProvider extends ServiceProvider
     {
         return [
             AddressService::class,
-            ClientService::class
+            ClientService::class,
+            UserService::class
         ];
     }
 }
