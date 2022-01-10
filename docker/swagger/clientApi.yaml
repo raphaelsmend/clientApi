@@ -502,6 +502,21 @@ paths:
                   [ The email field is required. ]
                 phone1:
                   [ The phone1 field is required. ]
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: string
+              data:
+                type: null
+            example:
+              processed: false
+              message: Unauthorized
+              data: null
     get:
       tags:
         - Client (JWT required)
@@ -575,6 +590,21 @@ paths:
                   address_number: "sn"
                   address_complement: null
                   created_at: "2022-01-10T03:45:29.000000Z"
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: string
+              data:
+                type: null
+            example:
+              processed: false
+              message: Unauthorized
+              data: null
   "/Client/{id}":
     get:
       tags:
@@ -663,6 +693,21 @@ paths:
               data:
                 Client:
                   [ The selected client is invalid. ]
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: string
+              data:
+                type: null
+            example:
+              processed: false
+              message: Unauthorized
+              data: null
     put:
       tags:
         - Client (JWT required)
@@ -771,6 +816,21 @@ paths:
               data:
                 Client:
                   [ The selected client is invalid. ]
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: string
+              data:
+                type: null
+            example:
+              processed: false
+              message: Unauthorized
+              data: null
     delete:
       tags:
         - Client (JWT required)
@@ -824,3 +884,18 @@ paths:
               data:
                 User:
                   [ The selected client is invalid. ]
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: string
+              data:
+                type: null
+            example:
+              processed: false
+              message: Unauthorized
+              data: null
