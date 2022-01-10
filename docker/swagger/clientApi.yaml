@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "Technical test for developing an full api to clients and users"
+  description: "BASE API HOST: http://localhost/api"
   version: 1.0.0
   title: Full API for Clients and User
   contact:
@@ -8,21 +8,20 @@ info:
   license:
     name: Apache 2.0
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: localhost:8000
-basePath: /api
-schemes:
-  - http
+# host: localhost:8000
+# basePath: /api
+#schemes:
+#  - http
 paths:
   /User:
     post:
       tags:
-        - user
+        - User
       summary: Create user
-      description: This can only be done by the logged in user.
       parameters:
         - in: body
           name: body
-          description: Created user object
+          description: Created user
           required: false
           schema:
             type: object
@@ -87,10 +86,43 @@ paths:
               data:
                 email:
                   [ The email field is required. ]
+    get:
+      tags:
+        - User
+      summary: get all users
+      responses:
+        "200":
+          description: get all users
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  created_at:
+                    type: string
+            example:
+              processed: true
+              message: null
+              data:
+                - name: Client number one
+                  email: clienr@oneS
+                  created_at: "2022-01-10T03:45:29.000000Z"
+                - name: Client number two
+                  email: clienr@two
+                  created_at: "2022-01-10T03:45:29.000000Z"
   "/User/{id}":
     get:
       tags:
-        - user
+        - User
       summary: get data user dy id
       description: ""
       parameters:
@@ -147,7 +179,7 @@ paths:
                   [ The selected user is invalid. ]
     put:
       tags:
-        - user
+        - User
       summary: Updated user
       parameters:
         - name: id
@@ -220,7 +252,7 @@ paths:
                   [ The selected user is invalid. ]
     delete:
       tags:
-        - user
+        - User
       summary: Delete user
       parameters:
         - name: id
@@ -271,40 +303,524 @@ paths:
               data:
                 User:
                   [ The selected user is invalid. ]
-  /user/login:
-    get:
+  /login:
+    post:
       tags:
-        - user
-      summary: Logs user into the system
-      description: ""
-      operationId: loginUser
-      produces:
-        - application/xml
-        - application/json
+        - Login
+      summary: Login (get JWT Bearer)
       parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: false
-          type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: false
-          type: string
+        - in: body
+          name: body
+          description: Login (get JWT Bearer)
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+            example:
+              email: clienr@one
+              password: 123
       responses:
         "200":
-          description: successful operation
+          description: logged. token JWT created
           schema:
-            type: string
-          headers:
-            X-Rate-Limit:
-              type: integer
-              format: int32
-              description: calls per hour allowed by the user
-            X-Expires-After:
-              type: string
-              format: date-time
-              description: date in UTC when toekn expires
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  expires_in:
+                    type: integer
+            example:
+              processed: true
+              message: null
+              data:
+                access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI...nDVSVoEu-1Ui12wkLQ-DzU8OyTHz-GfI"
+                token_type: bearer
+                expires_in: 3600
         "400":
-          description: Invalid username/password supplied
+          description: Error in fields requisition
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  email:
+                    type: string
+            example:
+              processed: false
+              message: null
+              data:
+                email:
+                  [ The selected email is invalid. ]
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: string
+              data:
+                type: null
+            example:
+              processed: false
+              message: Unauthorized
+              data: null
+  /Client:
+    post:
+      tags:
+        - Client (JWT required)
+      summary: Create client
+      description: This can only be done by the logged in user.
+      parameters:
+        - in: body
+          name: body
+          description: Created client
+          required: false
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+              phone1:
+                type: string
+              phone2:
+                type: string
+              zipCode:
+                type: integer
+              address_number:
+                type: string
+              address_complement:
+                type: string
+            example:
+              name: Client number one
+              email: clienr@one
+              phone1: "(99)99999999"
+              phone2: "(88)88888888"
+              zipCode: 9999999
+              address_number: sn
+              address_complement: complement
+      responses:
+        "200":
+          description: client created
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  phone1:
+                    type: string
+                  phone2:
+                    type: string
+                  address_id:
+                    type: string
+                  city:
+                    type: string
+                  district:
+                    type: string
+                  state:
+                    type: string
+                  street:
+                    type: string
+                  zipCode:
+                    type: string
+                  address_number:
+                    type: string
+                  address_complement:
+                    type: string
+                  created_at:
+                    type: string
+            example:
+              processed: true
+              message: null
+              data:
+                name: Client number one
+                email: clienr@one
+                phone1: "22323123123"
+                phone2: null
+                address_id: 1
+                city: "City"
+                district: "District"
+                state: "ZZ"
+                street: "Street"
+                zipCode: 99999999
+                address_number: "sn"
+                address_complement: null
+                created_at: "2022-01-10T03:45:29.000000Z"
+        "400":
+          description: Error in fields requisition
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  created_at:
+                    type: string
+            example:
+              processed: false
+              message: null
+              data:
+                email:
+                  [ The email field is required. ]
+                phone1:
+                  [ The phone1 field is required. ]
+    get:
+      tags:
+        - Client (JWT required)
+      summary: get all clients
+      responses:
+        "200":
+          description: all clients
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  phone1:
+                    type: string
+                  phone2:
+                    type: string
+                  address_id:
+                    type: string
+                  city:
+                    type: string
+                  district:
+                    type: string
+                  state:
+                    type: string
+                  street:
+                    type: string
+                  zipCode:
+                    type: string
+                  address_number:
+                    type: string
+                  address_complement:
+                    type: string
+                  created_at:
+                    type: string
+            example:
+              processed: true
+              message: null
+              data:
+                - name: Client number one
+                  email: clienr@one
+                  phone1: "22323123123"
+                  phone2: null
+                  address_id: 1
+                  city: "City"
+                  district: "District"
+                  state: "ZZ"
+                  street: "Street"
+                  zipCode: 99999999
+                  address_number: "sn"
+                  address_complement: null
+                  created_at: "2022-01-10T03:45:29.000000Z"
+                - name: Client number two
+                  email: clienr@two
+                  phone1: "22323123123"
+                  phone2: null
+                  address_id: 1
+                  city: "City"
+                  district: "District"
+                  state: "ZZ"
+                  street: "Street"
+                  zipCode: 99999999
+                  address_number: "sn"
+                  address_complement: null
+                  created_at: "2022-01-10T03:45:29.000000Z"
+  "/Client/{id}":
+    get:
+      tags:
+        - Client (JWT required)
+      summary: get data client dy id
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: "Client id"
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: return data user
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  phone1:
+                    type: string
+                  phone2:
+                    type: string
+                  address_id:
+                    type: string
+                  city:
+                    type: string
+                  district:
+                    type: string
+                  state:
+                    type: string
+                  street:
+                    type: string
+                  zipCode:
+                    type: string
+                  address_number:
+                    type: string
+                  address_complement:
+                    type: string
+                  created_at:
+                    type: string
+            example:
+              processed: true
+              message: null
+              data:
+                name: Client number one
+                email: clienr@one
+                phone1: "22323123123"
+                phone2: null
+                address_id: 1
+                city: "City"
+                district: "District"
+                state: "ZZ"
+                street: "Street"
+                zipCode: 99999999
+                address_number: "sn"
+                address_complement: null
+                created_at: "2022-01-10T03:45:29.000000Z"
+        "400":
+          description: Error in fields requisition
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  Client:
+                    type: string
+            example:
+              processed: false
+              message: null
+              data:
+                Client:
+                  [ The selected client is invalid. ]
+    put:
+      tags:
+        - Client (JWT required)
+      summary: Updated client
+      parameters:
+        - name: id
+          in: path
+          description: "Client id"
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Created client object
+          required: false
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+              phone1:
+                type: string
+              phone2:
+                type: string
+              zipCode:
+                type: integer
+              address_number:
+                type: string
+              address_complement:
+                type: string
+            example:
+              name: Client number one
+              email: clienr@one
+              phone1: "22323123123"
+              phone2: null
+              address_id: 1
+              city: "City"
+              district: "District"
+              state: "ZZ"
+              street: "Street"
+              zipCode: 99999999
+              address_number: "sn"
+              address_complement: null
+      responses:
+        "200":
+          description: return data client
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  phone1:
+                    type: string
+                  phone2:
+                    type: string
+                  zipCode:
+                    type: integer
+                  address_number:
+                    type: string
+                  address_complement:
+                    type: string
+            example:
+              processed: true
+              message: null
+              data:
+                name: Client number one
+                email: clienr@one
+                phone1: "22323123123"
+                phone2: null
+                address_id: 1
+                city: "City"
+                district: "District"
+                state: "ZZ"
+                street: "Street"
+                zipCode: 99999999
+                address_number: "sn"
+                address_complement: null
+                created_at: "2022-01-10T03:45:29.000000Z"
+        "400":
+          description: Error in fields requisition
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  Client:
+                    type: string
+            example:
+              processed: false
+              message: null
+              data:
+                Client:
+                  [ The selected client is invalid. ]
+    delete:
+      tags:
+        - Client (JWT required)
+      summary: Delete client
+      parameters:
+        - name: id
+          in: path
+          description: The id that needs to be deleted
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: deleted client
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  created_at:
+                    type: string
+            example:
+              processed: true
+              message: deleted
+              data: null
+        "400":
+          description: Error in fields requisition
+          schema:
+            type: object
+            properties:
+              processed:
+                type: boolean
+              message:
+                type: null
+              data:
+                type: object
+                properties:
+                  User:
+                    type: string
+            example:
+              processed: false
+              message: null
+              data:
+                User:
+                  [ The selected client is invalid. ]

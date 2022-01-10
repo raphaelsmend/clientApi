@@ -16,7 +16,8 @@ Prerequisites
 ============
 
 ```bash
-get latest version of docker and docker-compose
+- Linux (or WSL on windows)
+- latest version of docker and docker-compose
 ```
 
 Cloning repository
