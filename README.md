@@ -59,7 +59,7 @@ $ make down
 Links and Endpoints
 ============
 
-Create new URL
+All the endpoints in url
 ```bash
-ENDPOINT: http://localhost:8080
+http://localhost:8080
 ```
