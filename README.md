@@ -9,7 +9,7 @@
 * [Cloning repository](#clonning)
 * [Installing](#installing)
 * [Running](#running)
-* [Links and Endpoints](#endpoits)
+* [Swagger](#swagger)
 <!--te-->
 
 Prerequisites
@@ -56,10 +56,9 @@ for stop all containers
 $ make down
 ```
 
-Links and Endpoints
+Swagger
 ============
-
-All the endpoints in url
+Swagger with all endpoints
 ```bash
 http://localhost:8080
 ```
