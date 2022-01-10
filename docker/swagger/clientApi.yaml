@@ -1,6 +1,12 @@
 swagger: "2.0"
 info:
-  description: "BASE API HOST: http://localhost/api"
+  description: "BASE API URL: http://localhost/api <br><br>
+    URL METHODS SAMPLES: <br>
+    - http://localhost/api/User <br>
+    - http://localhost/api/User/1 <br>
+    - http://localhost/api/Client <br>
+    - http://localhost/api/Client/1 <br>
+    - http://localhost/api/login <br>"
   version: 1.0.0
   title: Full API for Clients and User
   contact:
@@ -406,6 +412,7 @@ paths:
                 type: string
               phone2:
                 type: string
+                required: false
               zipCode:
                 type: integer
               address_number:
