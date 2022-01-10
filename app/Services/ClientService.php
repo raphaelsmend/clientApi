@@ -76,7 +76,7 @@ class ClientService implements ClientServiceContract
      */
     public function update(int $id, array $fields)
     {
-        if ( $fields["zipCode"] ) {
+        if (array_key_exists("zipCode" , $fields)) {
             $addressId = $this->addressService->getAddressId($fields["zipCode"]);
 
             if (! $addressId ) {
