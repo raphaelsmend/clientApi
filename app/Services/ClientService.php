@@ -3,11 +3,14 @@
 namespace  App\Services;
 
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\ClientResourceCollection;
+use App\Models\Client;
 use App\Repositories\Contracts\ClientRepositoryContract;
 use App\Services\Contracts\AddressServiceContract;
 use App\Services\Contracts\ClientServiceContract;
 use App\Traits\GeneralFuncions;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClientService implements ClientServiceContract
@@ -30,7 +33,10 @@ class ClientService implements ClientServiceContract
      */
     public function getAll()
     {
-        return $this->repository->getAll();
+        return new JsonResponse(
+            $this->getApiReturn(true, null, ClientResource::collection($this->repository->getAll())),
+            Response::HTTP_OK
+        );
     }
 
     public function store(Array $fields)

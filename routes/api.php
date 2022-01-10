@@ -17,7 +17,7 @@ use Api\UserController;
 |
 */
 
-Route::resource('/Client', ClientController::class);
+Route::resource('/Client', ClientController::class)->middleware('jwtAuth');
 
 Route::resource('/User', UserController::class);
 

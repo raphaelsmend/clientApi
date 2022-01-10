@@ -1,7 +1,6 @@
 <?php
 
 namespace  App\Services;
-ource;
 use App\Http\Resources\UserResource;;
 use App\Repositories\Contracts\UserRepositoryContract;
 use App\Services\Contracts\UserServiceContract;
@@ -30,7 +29,10 @@ class UserService implements UserServiceContract
      */
     public function getAll()
     {
-        return $this->repository->getAll();
+        return new JsonResponse(
+            $this->getApiReturn(true, null, UserResource::collection($this->repository->getAll())),
+            Response::HTTP_OK
+        );
     }
 
     /**
